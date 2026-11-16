@@ -25,13 +25,3 @@ tokio = { version = "1", features = ["time"] }
 [build-dependencies]
 cmake = "0.1"
 cc = "1"
-
-[profile.dev]
-# The emulator core is C and always built optimised; keep the Rust side snappy too.
-opt-level = 1
-
-[profile.dev.package."*"]
-opt-level = 3
-
-[profile.release]
-lto = "thin"
