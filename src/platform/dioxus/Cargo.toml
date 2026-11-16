@@ -1,0 +1,37 @@
+[package]
+name = "mgba-dioxus"
+version = "0.1.0"
+edition = "2021"
+description = "A Dioxus desktop frontend for mGBA with a browsable game library"
+license = "MPL-2.0"
+build = "build.rs"
+
+[[bin]]
+name = "mgba-dioxus"
+path = "src/main.rs"
+
+[dependencies]
+dioxus = { version = "0.7", features = ["desktop"] }
+cpal = "0.16"
+gilrs = "0.11"
+ureq = "3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+dirs = "6"
+percent-encoding = "2"
+rfd = "0.15"
+tokio = { version = "1", features = ["time"] }
+
+[build-dependencies]
+cmake = "0.1"
+cc = "1"
+
+[profile.dev]
+# The emulator core is C and always built optimised; keep the Rust side snappy too.
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+lto = "thin"

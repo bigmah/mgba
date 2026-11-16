@@ -501,6 +501,12 @@ endif()
 
 set(WANT_ZLIB ${USE_ZLIB})
 set(WANT_PNG ${USE_PNG})
+if(LIBMGBA_ONLY AND LIBMGBA_BUNDLED_PNG)
+	# Embedders (e.g. the Dioxus frontend) can opt into the vendored zlib/libpng
+	# so that PNG-wrapped savestates and screenshots work without system deps.
+	set(WANT_ZLIB ON)
+	set(WANT_PNG ON)
+endif()
 set(WANT_SQLITE3 ${USE_SQLITE3})
 set(USE_CMOCKA ${BUILD_SUITE})
 
