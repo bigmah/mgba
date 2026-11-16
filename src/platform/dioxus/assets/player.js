@@ -27,10 +27,20 @@ window.__gba = (() => {
     }
   }
 
+  let lastTick = 0;
   function tick() {
     if (!running) return;
     ticks++;
+    lastTick = performance.now();
     requestAnimationFrame(tick);
+    pull();
+  }
+  // WebKit can stop firing rAF (e.g. occluded window); keep frames flowing anyway.
+  setInterval(() => {
+    if (running && performance.now() - lastTick > 100) pull();
+  }, 16);
+
+  function pull() {
     if (inflight) return;
     const canvas = document.getElementById('gba-screen');
     if (!canvas) return;
